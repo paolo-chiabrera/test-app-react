@@ -1,0 +1,7 @@
+import { APP_NAME } from '../../constants';
+
+const DECREASE_COUNTER = `${APP_NAME}/counter/DECREASE_COUNTER`;
+const INCREASE_COUNTER = `${APP_NAME}/counter/INCREASE_COUNTER`;
+const RESET_COUNTER = `${APP_NAME}/counter/RESET_COUNTER`;
+
+export { DECREASE_COUNTER, INCREASE_COUNTER, RESET_COUNTER };

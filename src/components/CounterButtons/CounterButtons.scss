@@ -1,0 +1,17 @@
+@import '~bpk-mixins';
+
+.CounterButtons {
+  &__container {
+    align-items: center;
+    margin: $bpk-spacing-sm;
+    display: inline-flex;
+    flex-direction: row wrap;
+    justify-content: center;
+  }
+  &__btn {
+    margin: $bpk-spacing-xs;
+  }
+  &__visually-hidden {
+    display: none;
+  }
+}
