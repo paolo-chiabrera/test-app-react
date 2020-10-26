@@ -14,6 +14,7 @@ const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
     <BpkButton
       className={STYLES['CounterButtons__btn']}
       iconOnly
+      id="plus-btn"
       onClick={() => increaseCounter()}
     >
       <AlignedPlusIcon />
@@ -24,6 +25,7 @@ const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
     <BpkButton
       className={STYLES['CounterButtons__btn']}
       iconOnly
+      id="minus-btn"
       onClick={() => decreaseCounter()}
     >
       <AlignedMinusIcon />
@@ -33,6 +35,7 @@ const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
     </BpkButton>
     <BpkButton
       className={STYLES['CounterButtons__btn']}
+      id="reset-btn"
       onClick={() => resetCounter()}
     >
       Reset
