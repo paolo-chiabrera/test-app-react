@@ -1,6 +1,16 @@
-sudo: false
 language: node_js
+
 node_js: 12
+
+cache:
+  # cache both npm modules and Cypress binary
+  directories:
+    - ~/.npm
+    - ~/.cache
+  override:
+    - npm ci
+
 script:
+  - npm ci
   - npm run lint
   - npm test
