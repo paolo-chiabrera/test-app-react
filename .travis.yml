@@ -7,10 +7,14 @@ cache:
   directories:
     - ~/.npm
     - ~/.cache
-  override:
-    - npm ci
 
-script:
-  - npm ci
-  - npm run lint
-  - npm test
+jobs:
+  include:
+    - stage: init
+      script: npm ci
+    - stage: test
+      script: 
+        - npm run lint
+        - npm test
+    - stage: integration
+      script: npm run build
