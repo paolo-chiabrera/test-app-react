@@ -70,28 +70,28 @@ jobs:
           restore-keys: |
             npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
       - run: npm run test
-  build:
-    needs: install
-    runs-on: ubuntu-latest
-    env:
-      CI: true
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
-        with:
-          path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm run build
-  integration:
+  # build:
+  #   needs: install
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     CI: true
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Use Node.js
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 12.x
+  #     - name: Cache node modules
+  #       uses: actions/cache@v1
+  #       env:
+  #         node-modules-cache-name: node-modules
+  #       with:
+  #         path: ./node_modules
+  #         key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+  #         restore-keys: |
+  #           npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+  #     - run: npm run build
+  cypress:
     needs: build
     runs-on: ubuntu-latest
     env:
@@ -99,10 +99,6 @@ jobs:
       CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
       - name: Cache node modules
         uses: actions/cache@v1
         env:
@@ -112,4 +108,14 @@ jobs:
           key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm run test:integration
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          build: npm run build
+          record: true
+          start: npm run serve:ci
+          wait-on: 'http://localhost:5000'
+
