@@ -12,6 +12,9 @@
 /build
 
 # cypress
+/cypress/integration/visual/**/*.actual.*
+/cypress/integration/visual/**/*.diff.*
+/cypress/screenshots
 /cypress/videos
 
 # misc

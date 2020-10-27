@@ -9,8 +9,6 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -29,11 +27,29 @@ jobs:
           key: cypress-${{ hashFiles('package-lock.json') }}
       - run: npm install
 
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - run: npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: ./build
+          retention-days: 1
   lint:
     needs: install
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -49,8 +65,6 @@ jobs:
   test:
     needs: install
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -63,13 +77,12 @@ jobs:
           path: ./node_modules
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run test
-  cypress:
-    needs: install
+
+  e2e:
+    needs: build
     runs-on: ubuntu-latest
-    env:
-      CI: true
-      CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
     steps:
+      # common
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
@@ -85,18 +98,106 @@ jobs:
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: ./build
+      # custom
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
-          build: npm run build
+          config-file: cypress/integration/e2e/config.json
           headless: true
           install: false
-          parallel: true
+          # parallel: true
+          quiet: true
           record: true
-          start: npm run serve:ci
+          start: npm run serve
+          wait-on: 'http://localhost:5000'
+
+  perf:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # common
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: ./build
+      # custom
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          browser: chrome
+          config-file: cypress/integration/perf/config.json
+          headless: true
+          install: false
+          # parallel: true
+          quiet: true
+          record: true
+          start: npm run serve
+          wait-on: 'http://localhost:5000'
+
+  visual:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # common
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: ./build
+      # custom
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          browser: chrome
+          config-file: cypress/integration/visual/config.json
+          headless: true
+          install: false
+          # parallel: true
+          quiet: true
+          record: true
+          start: npm run serve
           wait-on: 'http://localhost:5000'
 

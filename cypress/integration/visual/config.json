@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://localhost:5000",
+  "browser": "chrome",
+  "projectId": "6si1e7",
+  "integrationFolder": "cypress/integration/visual",
+  "testFiles": "**/*.test.js"
+}

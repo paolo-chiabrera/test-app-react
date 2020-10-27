@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:5000",
+  "browser": "chrome",
+  "projectId": "6si1e7",
+  "retries": {
+    "runMode": 3,
+    "openMode": 1
+  },
+  "integrationFolder": "cypress/integration/e2e",
+  "testFiles": "**/*.test.js"
+}

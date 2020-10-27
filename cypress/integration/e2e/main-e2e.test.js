@@ -1,4 +1,4 @@
-describe('My First Test', () => {
+describe('E2E test', () => {
   beforeEach(() => {
     cy.visit('/');
   });
