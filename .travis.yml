@@ -12,5 +12,7 @@ jobs:
       script: 
         - npm run lint
         - npm test
-    - stage: integration
+    - stage: build
       script: npm run build
+    - stage: integration
+      script: npm run test:integration
