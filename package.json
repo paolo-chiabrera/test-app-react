@@ -23,7 +23,7 @@
     "test:perf:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/perf/config.json",
     "test:visual": "cypress run --record false --config-file cypress/integration/visual/config.json",
     "test:visual:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/visual/config.json",
-    "serve": "serve -s build -l 5000"
+    "serve": "serve -s ./build -l 5000"
   },
   "browserslist": {
     "production": [
