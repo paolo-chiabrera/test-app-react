@@ -15,7 +15,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cypress:open": "cypress open",
+    "cypress:run:ci": "wait-on http://localhost:${PORT:-5000}/ && cypress run --record --key $CYPRESS_KEY",
+    "serve:ci": "serve -s build -l ${PORT:-5000} --no-clipboard",
+    "test:integration": "run-p --race serve:ci cypress:run:ci"
   },
   "browserslist": {
     "production": [
@@ -37,9 +41,13 @@
     "bpk-component-text": "^3.1.19",
     "bpk-mixins": "^20.1.1",
     "bpk-stylesheets": "^6.0.51",
+    "cypress": "^5.4.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.1.2"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2",
+    "serve": "^11.3.2",
+    "wait-on": "^5.2.0"
   }
 }

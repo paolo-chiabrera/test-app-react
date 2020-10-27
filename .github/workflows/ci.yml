@@ -26,7 +26,7 @@ jobs:
           key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm i
+      - run: npm ci
 
   lint:
     needs: install
@@ -91,3 +91,25 @@ jobs:
           restore-keys: |
             npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
       - run: npm run build
+  integration:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          node-modules-cache-name: node-modules
+        with:
+          path: ./node_modules
+          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+      - run: npm run test:integration
