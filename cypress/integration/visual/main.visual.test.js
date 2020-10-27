@@ -15,10 +15,6 @@ describe(`Test: ${SUITE_NAME}`, () => {
   it('should match the snapshot', () => {
     cy.visit('/').then(() => {
       cy.document().toMatchImageSnapshot({
-        imageConfig: {
-          threshold: 0.1,
-          thresholdType: 'percent',
-        },
         name: SUITE_NAME,
         separator: '_',
       });
