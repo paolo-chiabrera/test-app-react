@@ -18,15 +18,16 @@ jobs:
         with:
           node-version: 12.x
       - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
+        uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm ci
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+      - run: npm install
 
   lint:
     needs: install
@@ -40,14 +41,10 @@ jobs:
         with:
           node-version: 12.x
       - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
+        uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
   test:
     needs: install
@@ -61,38 +58,13 @@ jobs:
         with:
           node-version: 12.x
       - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
+        uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run test
-  build:
+  cypress:
     needs: install
-    runs-on: ubuntu-latest
-    env:
-      CI: true
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
-        with:
-          path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm run build
-  integration:
-    needs: build
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -104,12 +76,27 @@ jobs:
         with:
           node-version: 12.x
       - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          node-modules-cache-name: node-modules
+        uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
-      - run: npm run test:integration
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          browser: chrome
+          build: npm run build
+          headless: true
+          install: false
+          parallel: true
+          record: true
+          start: npm run serve:ci
+          wait-on: 'http://localhost:5000'
+
