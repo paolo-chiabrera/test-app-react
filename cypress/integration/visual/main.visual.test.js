@@ -20,6 +20,7 @@ describe(`Test: ${SUITE_NAME}`, () => {
           thresholdType: 'percent',
         },
         name: SUITE_NAME,
+        separator: '_',
       });
     });
   });

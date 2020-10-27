@@ -110,13 +110,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
-          config-file: cypress/integration/e2e/config.json
           headless: true
           install: false
           # parallel: true
           quiet: true
           record: true
+          spec: '**/*.e2e.test.js'
           start: npm run serve
+          tag: e2e
           wait-on: 'http://localhost:5000'
 
   perf:
@@ -151,13 +152,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
-          config-file: cypress/integration/perf/config.json
           headless: true
+          group: perf
           install: false
-          # parallel: true
+          parallel: true
           quiet: true
           record: true
+          spec: '**/*.perf.test.js'
           start: npm run serve
+          tag: perf
           wait-on: 'http://localhost:5000'
 
   visual:
@@ -192,12 +195,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
-          config-file: cypress/integration/visual/config.json
           headless: true
+          group: visual
           install: false
-          # parallel: true
+          parallel: true
           quiet: true
           record: true
+          spec: '**/*.visual.test.js'
           start: npm run serve
+          tag: visual
           wait-on: 'http://localhost:5000'
 
