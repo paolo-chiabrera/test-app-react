@@ -17,7 +17,13 @@
     "eject": "react-scripts eject",
     "lint": "eslint",
     "cypress:open": "cypress open",
-    "serve:ci": "serve -s build -l 5000"
+    "test:e2e": "cypress run --record false --config-file cypress/integration/e2e/config.json",
+    "test:e2e:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/e2e/config.json",
+    "test:perf": "cypress run --record false --config-file cypress/integration/perf/config.json",
+    "test:perf:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/perf/config.json",
+    "test:visual": "cypress run --record false --config-file cypress/integration/visual/config.json",
+    "test:visual:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/visual/config.json",
+    "serve": "serve -s build -l 5000"
   },
   "browserslist": {
     "production": [
@@ -40,6 +46,8 @@
     "bpk-mixins": "^20.1.1",
     "bpk-stylesheets": "^6.0.51",
     "cypress": "^5.5.0",
+    "cypress-audit": "^0.2.3",
+    "cypress-plugin-snapshots": "^1.4.4",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-prettier": "^3.1.4",

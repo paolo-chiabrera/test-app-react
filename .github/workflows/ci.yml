@@ -9,8 +9,6 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -32,8 +30,6 @@ jobs:
   lint:
     needs: install
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -49,8 +45,6 @@ jobs:
   test:
     needs: install
     runs-on: ubuntu-latest
-    env:
-      CI: true
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -63,12 +57,24 @@ jobs:
           path: ./node_modules
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run test
-  cypress:
+  build:
     needs: install
     runs-on: ubuntu-latest
-    env:
-      CI: true
-      CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - run: npm run build
+  e2e:
+    needs: install
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -91,12 +97,11 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          browser: chrome
-          build: npm run build
+          config-file: cypress/integration/e2e/config.json
           headless: true
           install: false
           parallel: true
           record: true
-          start: npm run serve:ci
+          start: npm run serve
           wait-on: 'http://localhost:5000'
 
