@@ -114,7 +114,11 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          browser: chrome
           build: npm run build
+          headless: true
+          install: false
+          parallel: true
           record: true
           start: npm run serve:ci
           wait-on: 'http://localhost:5000'
