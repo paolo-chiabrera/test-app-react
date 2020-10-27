@@ -1,10 +1,17 @@
 describe('E2E test', () => {
   beforeEach(() => {
+    cy.route2('GET', 'https://reqres.in/api/users/1', {
+      fixture: 'user.json',
+      headers: {
+        'access-control-allow-origin': '*',
+      },
+    });
     cy.visit('/');
   });
 
   it('should show the title', () => {
     cy.contains('Simple counter app');
+    cy.contains('Welcome Tracey');
   });
 
   it('should increase the counter', () => {

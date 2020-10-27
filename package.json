@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@skyscanner/backpack-react-scripts": "8.0.2",
+    "axios": "^0.21.0",
     "lodash": "^4.17.20",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -17,13 +18,11 @@
     "eject": "react-scripts eject",
     "lint": "eslint",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run --record false --config-file cypress/integration/e2e/config.json",
-    "test:e2e:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/e2e/config.json",
-    "test:perf": "cypress run --record false --config-file cypress/integration/perf/config.json",
-    "test:perf:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/perf/config.json",
-    "test:visual": "cypress run --record false --browser chrome --config-file cypress/integration/visual/config.json",
-    "test:visual:ci": "cypress run --record --key ${CYPRESS_RECORD_KEY} --config-file cypress/integration/visual/config.json",
-    "serve": "serve -s ./build -l 5000"
+    "test:e2e": "cypress run --record false -s **/*.e2e.test.js -b chrome",
+    "test:e2e:firefox": "cypress run --record false -s **/*.e2e.test.js -b firefox",
+    "test:perf": "cypress run --record false -s **/*.perf.test.js -b chrome",
+    "test:visual": "cypress run --record false -s **/*.visual.test.js -b chrome",
+    "serve": "serve --single --no-clipboard -l 5000 ./build"
   },
   "browserslist": {
     "production": [
