@@ -78,9 +78,12 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run test
 
-  e2e:
+  integration:
     needs: build
     runs-on: ubuntu-latest
+    env:
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       # common
       - uses: actions/checkout@v2
@@ -102,12 +105,8 @@ jobs:
         with:
           name: build-artifact
           path: ./build
-      # custom
       - name: e2e
         uses: cypress-io/github-action@v2
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
           headless: true
@@ -118,13 +117,9 @@ jobs:
           record: true
           spec: '**/*.e2e.test.js'
           start: npm run serve
-          tag: e2e
           wait-on: 'http://localhost:5000'
       - name: perf
         uses: cypress-io/github-action@v2
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
           headless: true
@@ -135,13 +130,9 @@ jobs:
           record: true
           spec: '**/*.perf.test.js'
           start: npm run serve
-          tag: perf
           wait-on: 'http://localhost:5000'
       - name: visual
         uses: cypress-io/github-action@v2
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           browser: chrome
           headless: true
@@ -152,91 +143,4 @@ jobs:
           record: true
           spec: '**/*.visual.test.js'
           start: npm run serve
-          tag: visual
           wait-on: 'http://localhost:5000'
-
-  # perf:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # common
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12.x
-  #     - name: Cache node modules
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ./node_modules
-  #         key: npm-${{ hashFiles('package-lock.json') }}
-  #     - name: Cache Cypress binary
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cache/Cypress
-  #         key: cypress-${{ hashFiles('package-lock.json') }}
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: build-artifact
-  #         path: ./build
-  #     # custom
-  #     - name: Cypress run
-  #       uses: cypress-io/github-action@v2
-  #       env:
-  #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         browser: chrome
-  #         headless: true
-  #         group: perf
-  #         install: false
-  #         parallel: true
-  #         quiet: true
-  #         record: true
-  #         spec: '**/*.perf.test.js'
-  #         start: npm run serve
-  #         tag: perf
-  #         wait-on: 'http://localhost:5000'
-
-  # visual:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # common
-  #     - uses: actions/checkout@v2
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12.x
-  #     - name: Cache node modules
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ./node_modules
-  #         key: npm-${{ hashFiles('package-lock.json') }}
-  #     - name: Cache Cypress binary
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cache/Cypress
-  #         key: cypress-${{ hashFiles('package-lock.json') }}
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: build-artifact
-  #         path: ./build
-  #     # custom
-  #     - name: Cypress run
-  #       uses: cypress-io/github-action@v2
-  #       env:
-  #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         browser: chrome
-  #         headless: true
-  #         group: visual
-  #         install: false
-  #         parallel: true
-  #         quiet: true
-  #         record: true
-  #         spec: '**/*.visual.test.js'
-  #         start: npm run serve
-  #         tag: visual
-  #         wait-on: 'http://localhost:5000'
