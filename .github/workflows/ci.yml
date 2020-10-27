@@ -111,9 +111,9 @@ jobs:
         with:
           browser: chrome
           headless: true
-          # group: e2e
+          group: e2e
           install: false
-          # parallel: true
+          parallel: true
           quiet: true
           record: true
           spec: '**/*.e2e.test.js'
@@ -154,9 +154,9 @@ jobs:
         with:
           browser: chrome
           headless: true
-          # group: perf
+          group: perf
           install: false
-          # parallel: true
+          parallel: true
           quiet: true
           record: true
           spec: '**/*.perf.test.js'
@@ -197,9 +197,9 @@ jobs:
         with:
           browser: chrome
           headless: true
-          # group: visual
+          group: visual
           install: false
-          # parallel: true
+          parallel: true
           quiet: true
           record: true
           spec: '**/*.visual.test.js'
