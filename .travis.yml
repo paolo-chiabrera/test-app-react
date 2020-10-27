@@ -2,11 +2,7 @@ language: node_js
 
 node_js: 12
 
-cache:
-  # cache both npm modules and Cypress binary
-  directories:
-    - ~/.npm
-    - ~/.cache
+cache: npm
 
 jobs:
   include:
