@@ -3,7 +3,9 @@ describe('Performance test', () => {
     cy.visit('/');
   });
 
-  it('should show the title', () => {
-    cy.lighthouse();
+  it('should pass', () => {
+    cy.lighthouse({
+      performance: 85,
+    });
   });
 });
