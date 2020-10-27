@@ -92,7 +92,7 @@ jobs:
   #           npm-${{ env.node-modules-cache-name }}-${{ hashFiles('package-lock.json') }}
   #     - run: npm run build
   cypress:
-    needs: build
+    needs: install
     runs-on: ubuntu-latest
     env:
       CI: true
