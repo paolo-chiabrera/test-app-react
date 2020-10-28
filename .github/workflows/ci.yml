@@ -103,7 +103,7 @@ jobs:
           name: build-artifact
           path: ./build
       # custom
-      - name: Cypress run
+      - name: cypress
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -118,7 +118,6 @@ jobs:
           record: true
           spec: '**/*.e2e.test.js'
           start: npm run serve
-          tag: e2e
           wait-on: 'http://localhost:5000'
 
   perf:
@@ -146,7 +145,7 @@ jobs:
           name: build-artifact
           path: ./build
       # custom
-      - name: Cypress run
+      - name: cypress
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -161,7 +160,6 @@ jobs:
           record: true
           spec: '**/*.perf.test.js'
           start: npm run serve
-          tag: perf
           wait-on: 'http://localhost:5000'
 
   visual:
@@ -189,7 +187,7 @@ jobs:
           name: build-artifact
           path: ./build
       # custom
-      - name: Cypress run
+      - name: cypress
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -204,6 +202,4 @@ jobs:
           record: true
           spec: '**/*.visual.test.js'
           start: npm run serve
-          tag: visual
           wait-on: 'http://localhost:5000'
-
