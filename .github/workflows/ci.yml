@@ -78,7 +78,7 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run test
 
-  integration:
+  e2e:
     needs: build
     runs-on: ubuntu-latest
     steps:
