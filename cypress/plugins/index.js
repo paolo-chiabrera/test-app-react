@@ -1,5 +1,6 @@
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 const { initPlugin } = require('cypress-plugin-snapshots/plugin');
+const happoTask = require('happo-cypress/task');
 
 module.exports = (on, config) => {
   initPlugin(on, config);
@@ -9,6 +10,7 @@ module.exports = (on, config) => {
   });
 
   on('task', {
+    ...happoTask,
     lighthouse: lighthouse(),
     pa11y: pa11y(),
   });

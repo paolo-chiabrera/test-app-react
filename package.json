@@ -21,7 +21,7 @@
     "test:e2e": "cypress run --record false -s **/*.e2e.test.js -b chrome",
     "test:e2e:firefox": "cypress run --record false -s **/*.e2e.test.js -b firefox",
     "test:perf": "cypress run --record false -s **/*.perf.test.js -b chrome",
-    "test:visual": "cypress run --record false -s **/*.visual.test.js -b chrome",
+    "test:visual": "happo-cypress -- cypress run --record false -s **/*.visual.test.js -b chrome",
     "serve": "serve --single --no-clipboard -l 5000 ./build"
   },
   "browserslist": {
@@ -50,6 +50,8 @@
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "happo-cypress": "^1.9.3",
+    "happo.io": "^6.1.0",
     "prettier": "^2.1.2",
     "serve": "^11.3.2"
   }

@@ -14,10 +14,7 @@ describe(`Test: ${SUITE_NAME}`, () => {
 
   it('should match the snapshot', () => {
     cy.visit('/').then(() => {
-      cy.document().toMatchImageSnapshot({
-        name: SUITE_NAME,
-        separator: '_',
-      });
+      cy.get('body').happoScreenshot();
     });
   });
 });
