@@ -1,6 +1,6 @@
 describe('E2E test', () => {
   beforeEach(() => {
-    cy.route2('GET', 'https://reqres.in/api/users/1', {
+    cy.intercept('GET', 'https://reqres.in/api/users/1', {
       fixture: 'user.json',
       headers: {
         'access-control-allow-origin': '*',

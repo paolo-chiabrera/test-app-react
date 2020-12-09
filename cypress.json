@@ -1,6 +1,5 @@
 {
   "baseUrl": "http://localhost:5000",
-  "experimentalNetworkStubbing": true,
   "projectId": "6si1e7",
   "retries": {
     "runMode": 2

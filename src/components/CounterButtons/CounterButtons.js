@@ -12,6 +12,7 @@ import STYLES from './CounterButtons.scss';
 const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
   <div className={STYLES['CounterButtons__container']}>
     <BpkButton
+      aria-label="Increase counter"
       className={STYLES['CounterButtons__btn']}
       iconOnly
       id="plus-btn"
@@ -23,6 +24,7 @@ const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
       </span>
     </BpkButton>
     <BpkButton
+      aria-label="Decrease counter"
       className={STYLES['CounterButtons__btn']}
       iconOnly
       id="minus-btn"
@@ -34,6 +36,7 @@ const CounterButtons = ({ decreaseCounter, increaseCounter, resetCounter }) => (
       </span>
     </BpkButton>
     <BpkButton
+      aria-label="Reset"
       className={STYLES['CounterButtons__btn']}
       id="reset-btn"
       onClick={() => resetCounter()}
