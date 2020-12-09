@@ -242,7 +242,7 @@ jobs:
         uses: cypress-io/github-action@v2
         env:
           APPLITOOLS_API_KEY: ${{ secrets.APPLITOOLS_API_KEY }}
-          APPLITOOLS_BATCH_ID: ${{ github.GITHUB_REPOSITORY }}/${{ github.GITHUB_RUN_NUMBER }}  
+          APPLITOOLS_BATCH_ID: ${{ github.sha }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
