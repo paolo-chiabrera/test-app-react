@@ -1,4 +1,7 @@
+const { GITHUB_REPOSITORY, GITHUB_RUN_NUMBER } = process.env;
+
 module.exports = {
+  batchName: `${GITHUB_REPOSITORY}/${GITHUB_RUN_NUMBER}`,
   browser: [
     // Add browsers with different viewports
     { width: 800, height: 600, name: 'chrome' },
