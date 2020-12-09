@@ -1,5 +1,4 @@
 module.exports = {
-  batchName: 'test-app',
   browser: [
     // Add browsers with different viewports
     { width: 800, height: 600, name: 'chrome' },
