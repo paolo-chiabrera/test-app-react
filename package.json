@@ -18,10 +18,14 @@
     "eject": "react-scripts eject",
     "lint": "eslint",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run --record false -s **/*.e2e.test.js -b chrome",
-    "test:e2e:firefox": "cypress run --record false -s **/*.e2e.test.js -b firefox",
-    "test:perf": "cypress run --record false -s **/*.perf.test.js -b chrome",
-    "test:visual": "cypress run --record false -s **/*.visual.test.js -b chrome",
+    "test:a11y": "cypress run -s cypress/integration/a11y/**/*.spec.js -b chrome --headless",
+    "test:a11y:ci": "npm run test:a11y -- -q --parallel --record --group a11y",
+    "test:e2e": "cypress run -s cypress/integration/e2e/**/*.spec.js -b chrome --headless",
+    "test:e2e:ci": "npm run test:e2e -- -q --parallel --record --group e2e",
+    "test:perf": "cypress run -s cypress/integration/perf/**/*.spec.js -b chrome --headless",
+    "test:perf:ci": "npm run test:perf -- -q --parallel --record --group perf",
+    "test:visual": "cypress run -s cypress/integration/visual/**/*.spec.js -b chrome --headless",
+    "test:visual:ci": "npm run test:visual -- -q --parallel --record --group visual",
     "serve": "serve --single --no-clipboard -l 5000 ./build"
   },
   "browserslist": {
@@ -37,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@applitools/eyes-cypress": "^3.16.1",
     "@testing-library/react": "^11.1.0",
     "bpk-component-button": "^3.2.63",
     "bpk-component-code": "^2.0.84",
@@ -44,9 +49,8 @@
     "bpk-component-text": "^3.1.19",
     "bpk-mixins": "^20.1.1",
     "bpk-stylesheets": "^6.0.51",
-    "cypress": "^5.5.0",
+    "cypress": "^6.1.0",
     "cypress-audit": "^0.2.3",
-    "cypress-plugin-snapshots": "^1.4.4",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-prettier": "^3.1.4",
