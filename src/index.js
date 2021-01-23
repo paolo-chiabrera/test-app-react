@@ -1,4 +1,5 @@
 import 'bpk-stylesheets/base';
+import 'bpk-stylesheets/base.css';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
