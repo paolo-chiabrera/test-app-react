@@ -8,34 +8,33 @@ on:
 
 env:
   HUSKY: 0
-  NODE_VERSION: 12.18.3
+  NODE_VERSION: 14.16.0
 
 jobs:
   cancel-outdated-workflows:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel outdated workflows
-        uses: fkirc/skip-duplicate-actions@v2.1.0
+        uses: fkirc/skip-duplicate-actions@v3.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  install:
-    needs: cancel-outdated-workflows
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         id: cache-node-modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -44,19 +43,19 @@ jobs:
         run: npm ci
 
   build:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - run: npm run build
       - uses: actions/upload-artifact@v2
         with:
@@ -64,34 +63,34 @@ jobs:
           path: ./build
           retention-days: 1
   lint:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
   test:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - run: npm run test
 
   a11y:
@@ -101,16 +100,16 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -128,7 +127,7 @@ jobs:
           browser: chrome
           headless: true
           group: a11y
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -143,16 +142,16 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -170,7 +169,7 @@ jobs:
           browser: chrome
           headless: true
           group: e2e
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -185,16 +184,16 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -212,7 +211,7 @@ jobs:
           browser: chrome
           headless: true
           group: perf
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -227,16 +226,16 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
+          key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -255,7 +254,7 @@ jobs:
           browser: chrome
           headless: true
           group: visual
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
