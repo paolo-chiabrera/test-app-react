@@ -1,10 +1,14 @@
-name: CI
+name: ci
 
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
+
+env:
+  HUSKY: 0
+  NODE_VERSION: 12.18.3
 
 jobs:
   cancel-outdated-workflows:
@@ -23,8 +27,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
+        id: cache-node-modules
         uses: actions/cache@v2
         with:
           path: ./node_modules
@@ -34,7 +39,9 @@ jobs:
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
-      - run: npm install
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
 
   build:
     needs: install
@@ -44,7 +51,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -64,7 +71,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -79,7 +86,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -96,7 +103,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -138,7 +145,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -180,7 +187,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -222,7 +229,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
