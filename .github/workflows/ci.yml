@@ -19,8 +19,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  install:
-    needs: cancel-outdated-workflows
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -44,7 +43,7 @@ jobs:
         run: npm ci
 
   build:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -64,7 +63,7 @@ jobs:
           path: ./build
           retention-days: 1
   lint:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -79,7 +78,7 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
   test:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -128,7 +127,7 @@ jobs:
           browser: chrome
           headless: true
           group: a11y
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -170,7 +169,7 @@ jobs:
           browser: chrome
           headless: true
           group: e2e
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -212,7 +211,7 @@ jobs:
           browser: chrome
           headless: true
           group: perf
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -255,7 +254,7 @@ jobs:
           browser: chrome
           headless: true
           group: visual
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
