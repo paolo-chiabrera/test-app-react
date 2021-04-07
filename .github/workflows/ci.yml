@@ -29,12 +29,12 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         id: cache-node-modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -52,7 +52,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -73,7 +73,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -89,7 +89,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -142,12 +142,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -184,12 +184,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -226,12 +226,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
@@ -268,12 +268,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Cache Cypress binary
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
