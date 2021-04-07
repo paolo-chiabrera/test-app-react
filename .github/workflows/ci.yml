@@ -1,10 +1,14 @@
-name: CI
+name: ci
 
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
+
+env:
+  HUSKY: 0
+  NODE_VERSION: 12.18.3
 
 jobs:
   cancel-outdated-workflows:
@@ -15,16 +19,16 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  install:
-    needs: cancel-outdated-workflows
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
+        id: cache-node-modules
         uses: actions/cache@v2
         with:
           path: ./node_modules
@@ -34,17 +38,19 @@ jobs:
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ hashFiles('package-lock.json') }}
-      - run: npm install
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
 
   build:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -57,14 +63,14 @@ jobs:
           path: ./build
           retention-days: 1
   lint:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -72,14 +78,14 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
   test:
-    needs: install
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -96,7 +102,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -121,7 +127,7 @@ jobs:
           browser: chrome
           headless: true
           group: a11y
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -138,7 +144,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -163,7 +169,7 @@ jobs:
           browser: chrome
           headless: true
           group: e2e
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -180,7 +186,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -205,7 +211,7 @@ jobs:
           browser: chrome
           headless: true
           group: perf
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
@@ -222,7 +228,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -248,7 +254,7 @@ jobs:
           browser: chrome
           headless: true
           group: visual
-          install: false
+          prepare: false
           parallel: true
           quiet: true
           record: true
