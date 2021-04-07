@@ -49,7 +49,7 @@
   "devDependencies": {
     "@applitools/eyes-cypress": "^3.18.5",
     "@testing-library/react": "^11.1.0",
-    "cypress": "^6.1.0",
+    "cypress": "^7.0.1",
     "cypress-audit": "^0.2.3",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
