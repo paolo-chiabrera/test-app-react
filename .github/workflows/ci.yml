@@ -127,7 +127,7 @@ jobs:
           browser: chrome
           headless: true
           group: a11y
-          prepare: false
+          install: false
           parallel: true
           quiet: true
           record: true
@@ -169,7 +169,7 @@ jobs:
           browser: chrome
           headless: true
           group: e2e
-          prepare: false
+          install: false
           parallel: true
           quiet: true
           record: true
@@ -211,7 +211,7 @@ jobs:
           browser: chrome
           headless: true
           group: perf
-          prepare: false
+          install: false
           parallel: true
           quiet: true
           record: true
@@ -254,7 +254,7 @@ jobs:
           browser: chrome
           headless: true
           group: visual
-          prepare: false
+          install: false
           parallel: true
           quiet: true
           record: true
