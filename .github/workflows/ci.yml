@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -83,7 +83,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -100,7 +100,7 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -142,7 +142,7 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -184,7 +184,7 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
@@ -226,7 +226,7 @@ jobs:
       # common
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache node modules
