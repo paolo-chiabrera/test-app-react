@@ -57,7 +57,7 @@ jobs:
           path: ./node_modules
           key: npm-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - run: npm run build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: build-artifact
           path: ./build
