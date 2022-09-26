@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel outdated workflows
-        uses: fkirc/skip-duplicate-actions@v3.4.0
+        uses: fkirc/skip-duplicate-actions@v5.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
