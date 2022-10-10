@@ -47,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@applitools/eyes-cypress": "^3.20.4",
+    "@applitools/eyes-cypress": "^3.27.2",
     "@testing-library/react": "^11.2.6",
     "cypress": "^7.0.1",
     "cypress-audit": "^0.2.3",
